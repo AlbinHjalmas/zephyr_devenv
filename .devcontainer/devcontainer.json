@@ -1,0 +1,49 @@
+{
+	"name": "zephyr_lora_gateway",
+	"build": {
+		"dockerfile": "Dockerfile.zephyr",
+		"args": {
+			"userId": "${localEnv:UID}",
+			"groupId": "${localEnv:GID}"
+		}
+	},
+	"remoteUser": "user",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workdir/project,type=bind,consistency=cached",
+	"workspaceFolder": "/workdir/project",
+	"runArgs": [
+		"--privileged",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt",
+		"seccomp=unconfined",
+		"--hostname=systemfabriken",
+		"--network=host"
+	],
+	"mounts": [
+		"type=bind,source=/dev/bus/usb,target=/dev/bus/usb", // Give the container access to usb debuggers and other devices (Only works on linux?)
+		"type=bind,source=/dev/,target=/dev/" // Give the container access to serial devices
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"xaver.clang-format",
+				"eamodio.gitlens",
+				"mcu-debug.debug-tracker-vscode",
+				"mcu-debug.rtos-views",
+				"marus25.cortex-debug",
+				"yzhang.markdown-all-in-one",
+				"github.copilot",
+				"trond-snekvik.devicetree",
+				"trond-snekvik.kconfig-lang",
+				"trond-snekvik.gnu-mapfiles",
+				"ms-vscode.cpptools",
+				"twxs.cmake",
+				"tomoki1207.pdf",
+				"hediet.vscode-drawio"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			}
+		}
+	},
+	"postAttachCommand": "/workdir/project/simulation/start-renode-server" // Start renode telnet server when starting devcontainer"
+}

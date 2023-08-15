@@ -1,0 +1,40 @@
+#!/bin/zsh
+
+# specify your desired pty terminal and job ID here
+PTY_TERMINAL="/tmp/renode_uart"
+JOB_ID="renode_uart_job_id"
+
+# wait for the specified pty terminal to be available
+while [ ! -e $PTY_TERMINAL ]
+do
+  echo "Waiting for $PTY_TERMINAL to be created..."
+  sleep 1
+done
+
+# store the pid of this shell
+echo $$ > "$(dirname $0)/${JOB_ID}.pid"
+
+# check if the pty terminal is already in use or is locked
+if [ -e $PTY_TERMINAL.lock ]
+then
+  echo "The pty terminal is locked, unlocking it..."
+  # if it is, unlock it
+  rm $PTY_TERMINAL.lock
+fi
+
+# Create the local emulation status file
+echo "Creating emulation-status.txt..."
+echo "no" > "$(dirname $0)/../emulation-status.txt"
+
+# wait for the emulation to start by waiting until "yes" is appended to the local status file
+while [ "$(tail -n 1 $(dirname $0)/../emulation-status.txt)" != "yes" ]
+do
+  echo "Waiting for emulation to start..."
+  sleep 1
+done
+
+# remove the status file
+rm "$(dirname $0)/../emulation-status.txt"
+
+# start minicom on the specified pty terminal at 115200 baud rate
+exec minicom -D $PTY_TERMINAL -b 115200

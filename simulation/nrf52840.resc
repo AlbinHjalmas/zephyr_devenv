@@ -1,0 +1,20 @@
+:name: STM32F746
+:description: This script runs stm32f746 with a uart pty terminal
+
+using sysbus
+
+mach create
+machine LoadPlatformDescription @platforms/cpus/stm32f746.repl
+
+$bin?=@/workdir/project/firmware/build/zephyr/zephyr.elf
+
+showAnalyzer usart3
+
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+runMacro $reset
+
+emulation CreateUartPtyTerminal "term" "/tmp/renode_uart"
+connector Connect sysbus.usart3 term

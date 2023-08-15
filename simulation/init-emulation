@@ -1,0 +1,21 @@
+#!/usr/bin/zsh
+
+# Get the directory path of the current script
+SCRIPT_DIR=$(dirname "$0:A")
+
+echo "Cleaning up previous emulation..."
+$SCRIPT_DIR/close-emulation
+
+echo "Starting emulation..."
+$SCRIPT_DIR/renode-command 'include @/workdir/project/simulation/nrf52840.resc' > /dev/null
+$SCRIPT_DIR/renode-command 'machine StartGdbServer 3334' > /dev/null
+
+# wait until emulation_status.txt is created
+while [ ! -f $SCRIPT_DIR/../emulation-status.txt ]; do
+    echo "Waiting for emulation-status.txt to be created..."
+    sleep 1
+done
+
+# Add "yes" to local status file to signal other scripts that the emulation is running
+echo "emulation-status.txt found!"
+echo "yes" > $SCRIPT_DIR/../emulation-status.txt

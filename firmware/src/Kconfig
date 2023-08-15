@@ -1,0 +1,9 @@
+menu "VelocityEstimation Firmware Configuration"
+
+config USE_USB_CDC_ACM
+	bool "Enable CDC ACM"
+	default n
+	help
+	  Enables CDC ACM support for the RopeRobot firmware.
+
+endmenu

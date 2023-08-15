@@ -1,0 +1,70 @@
+# nRF Connect SDK image
+FROM ghcr.io/zephyrproject-rtos/zephyr-build:latest
+
+USER root
+
+RUN apt-get update && \
+    apt-get upgrade -y
+
+# Install dependencies
+RUN apt-get install -y \
+    build-essential \
+    libxcb-render-util0 \
+    libxcb-shape0 \
+    libxcb-randr0 \
+    libxcb-icccm4 \
+    libxcb-keysyms1 \
+    libxcb-image0 \
+    libxkbcommon-x11-0 \
+    sudo \
+    minicom \
+    clang-format \
+    wget \
+    netcat \
+    telnet \ 
+    minicom \ 
+    lsof
+
+ENV PATH="/usr/bin/udevadm:${PATH}"
+COPY JLink_Linux_V782a_x86_64.deb /JLink.deb
+RUN dpkg -i /JLink.deb
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN rm /JLink.deb
+
+# Set up users
+RUN sed -i.bkp -e \
+    's/%sudo\s\+ALL=(ALL\(:ALL\)\?)\s\+ALL/%sudo ALL=NOPASSWD:ALL/g' \
+    /etc/sudoers
+
+ARG userId=1000
+ARG groupId=1000
+
+RUN mkdir -p /home/user && \
+    echo "user:x:$userId:$groupId:User,,,:/home/user:/bin/bash" >> /etc/passwd && \
+    echo "user:x:$userId:" >> /etc/group && \
+    echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user && \
+    chmod 0440 /etc/sudoers.d/user && \
+    chown $userId:$groupId -R /home/user
+
+RUN mkdir -p /workdir && chown user:user /workdir
+USER user
+ENV HOME /home/user
+WORKDIR /workdir
+
+RUN west init . \
+    && west update \
+    && west zephyr-export \
+    && pip3 install --user -r zephyr/scripts/requirements.txt
+
+# Install Renode
+ENV DEBIAN_FRONTEND=noninteractive
+RUN echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
+ARG RENODE_VERSION=1.13.3
+RUN wget https://github.com/renode/renode/releases/download/v${RENODE_VERSION}/renode_${RENODE_VERSION}_amd64.deb && \
+    sudo apt-get update && \
+    sudo apt-get install -y --no-install-recommends ./renode_${RENODE_VERSION}_amd64.deb python3-dev && \
+    rm ./renode_${RENODE_VERSION}_amd64.deb && \
+    sudo rm -rf /var/lib/apt/lists/*
+
+RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/v1.1.5/zsh-in-docker.sh)" -- -t gnzh

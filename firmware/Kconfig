@@ -1,0 +1,7 @@
+menu "VelocityEstimator configuration"
+
+source "Kconfig.zephyr"
+
+rsource "src/Kconfig"
+
+endmenu

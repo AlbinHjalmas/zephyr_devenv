@@ -1,0 +1,19 @@
+# editors
+*.swp
+*~
+.vscode-ctags
+
+# python
+.venv
+.vscode/.cortex-debug.peripherals.state.json
+.vscode/.cortex-debug.registers.state.json
+
+# documentation
+documentation/app_design/assets/*.bkp
+documentation/app_design/assets/.$RopeRobot Mounting Scenario.drawio.dtmp
+documentation/app_design/assets/.$RopeRobot_arch.drawio.dtmp
+*.dtmp
+*.bkp
+
+# simulation artifacts
+nohup.out

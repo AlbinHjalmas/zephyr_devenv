@@ -1,0 +1,35 @@
+#!/usr/bin/zsh
+
+set +e # Ignore errors
+
+pkill -9 -f Renode.exe || true
+
+# Set the maximum number of retries and the time interval between them
+MAX_RETRIES=2
+RETRY_INTERVAL=1
+
+unset DISPLAY
+
+# Start Renode in the background and redirect its output to a log file
+nohup bash -c "renode --disable-xwt -P 1338 &" # Start renode telnet server on port 1338
+sleep 1 # Wait for Renode to start
+
+# Loop until Renode appears on port 1338 or we run out of retries
+for i in $(seq 1 $MAX_RETRIES); do
+    # Check if Renode is listening on port 1338
+    if lsof -Pi :1338 -sTCP:LISTEN -t >/dev/null; then
+        echo "Renode started successfully"
+        exit 0
+    fi
+
+    echo "Renode not started yet, retrying..."
+    nohup bash -c "renode --disable-xwt -P 1338 &" # Start renode telnet server on port 1338
+    sleep 1
+
+    # Wait for the specified interval before retrying
+    sleep $RETRY_INTERVAL
+done
+
+# If we've run out of retries, print an error message and exit with a non-zero status
+echo "ERROR: Failed to start program after $MAX_RETRIES retries"
+exit 1

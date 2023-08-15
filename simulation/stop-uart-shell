@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+# specify your job ID here
+JOB_ID="renode_uart_job_id"
+
+# read the pid from the file
+PID=$(cat "$(dirname $0)/${JOB_ID}.pid")
+
+# Exit script if the pid file is empty
+if [ -z "$PID" ]
+then
+  exit 1
+fi
+
+# end the minicom session
+kill $PID
+
+# remove the pid file
+rm -f "$(dirname $0)/${JOB_ID}.pid"
+
+# remove the uart PTY file
+PTY_TERMINAL="/tmp/renode_uart"
+rm -f $PTY_TERMINAL

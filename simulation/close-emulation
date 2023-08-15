@@ -1,0 +1,8 @@
+#!/usr/bin/zsh
+
+# Get the directory path of the current script
+SCRIPT_DIR=$(dirname "$0:A")
+
+$SCRIPT_DIR/renode-command Clear > /dev/null
+
+$SCRIPT_DIR/stop-uart-shell

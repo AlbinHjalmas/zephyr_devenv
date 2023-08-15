@@ -1,0 +1,177 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "reset renode simulation",
+            "type": "shell",
+            "command": "${workspaceFolder}/simulation/init-emulation",
+            "isBackground": false,
+            "hide": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "start simulation shell",
+            "type": "shell",
+            "command": "${workspaceFolder}/simulation/start-uart-shell",
+            "isBackground": true,
+            "hide": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": false
+            },
+            // This task is run before some debug tasks.
+            // Problem is, it's a watch script, and since it never exits, VSCode
+            // complains. All this is needed so VSCode just lets it run.
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
+        },
+        {
+            "label": "setup firmware simulation",
+            "type": "shell",
+            "command": "echo Started!",
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "reset renode simulation",
+                "start simulation shell"
+            ],
+            "isBackground": false,
+            "hide": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "close emulation",
+            "type": "shell",
+            "command": "${workspaceFolder}/simulation/close-emulation",
+            "isBackground": false,
+            "hide": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "start nucleo debug session",
+            "type": "shell",
+            "command": "JLinkGDBServer -select USB=772801009 -device STM32F767ZI -endian little -if SWD -speed 12000 -noir -noLocalhostOnly -nologtofile -port 10000 -SWOPort 10001 -TelnetPort 10002",
+            "isBackground": true,
+            "hide": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": true
+            },
+            // This task is run before some debug tasks.
+            // Problem is, it's a watch script, and since it never exits, VSCode
+            // complains. All this is needed so VSCode just lets it run.
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
+        },
+        {
+            "label": "build firmware",
+            "type": "shell",
+            "command": "cd ${workspaceFolder}/firmware && west build -b nucleo_f767zi",
+            "isBackground": false,
+            "hide": false,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": false
+            },
+            "problemMatcher": "$gcc",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build pristine firmware",
+            "type": "shell",
+            "command": "cd ${workspaceFolder}/firmware && west build -p -b nucleo_f767zi",
+            "isBackground": false,
+            "hide": false,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": false
+            },
+            "problemMatcher": "$gcc",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

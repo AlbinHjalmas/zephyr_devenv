@@ -4,7 +4,7 @@
             "name": "firmware Debug",
             "includePath": [
                 "${workspaceFolder}/firmware/src/**",
-                "${workspaceFolder}/lora-gateway/include/**"
+                "${workspaceFolder}/loragw-con/include/**"
             ],
             "defines": [
                 "__ASSERT_ON=1",
@@ -19,7 +19,7 @@
         {
             "name": "libloragw",
             "includePath": [
-                "${workspaceFolder}/lora-gateway/sx1302_hal/libloragw/inc/**",
+                "${workspaceFolder}/loragw-con/sx1302_hal/libloragw/inc/**",
             ],
             "compilerPath": "/usr/bin/gcc",
             "cppStandard": "${default}",

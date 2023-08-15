@@ -1,0 +1,3 @@
+[submodule "loragw-con"]
+	path = loragw-con
+	url = git@github.com:AlbinHjalmas/loragw-con.git

@@ -35,7 +35,11 @@
         "loragw_con.h": "c",
         "time.h": "c",
         "sx130x_reg.h": "c",
-        "sx130x.h": "c"
+        "sx130x.h": "c",
+        "timestamp.h": "c",
+        "sx130x_api.h": "c",
+        "rx_buffer.h": "c",
+        "lorawan.h": "c"
     },
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",

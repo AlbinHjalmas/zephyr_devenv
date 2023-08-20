@@ -39,7 +39,10 @@
         "timestamp.h": "c",
         "sx130x_api.h": "c",
         "rx_buffer.h": "c",
-        "lorawan.h": "c"
+        "lorawan.h": "c",
+        "math.h": "c",
+        "sx130x_cal.h": "c",
+        "sx130x_spi_mux.h": "c"
     },
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",

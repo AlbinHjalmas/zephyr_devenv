@@ -12,7 +12,6 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/device.h>
-#include <zephyr/drivers/loragw_con.h>
 
 // PRIVATE DECLARATIONS
 // ###############################################################################################
@@ -22,18 +21,13 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 // ######################################################################################
 
 // PRIVATE DEFINITIONS
-// ################################################################################################
-#define SX1303 DT_NODELABEL(loragw_con)
-static const struct device *sx1303 = DEVICE_DT_GET(SX1303);
 
+// ################################################################################################
 // PROGRAM ENTRY
 // ######################################################################################################
 void main(void)
 {
 	LOG_DBG("Hello World!");
-
-	loragw_con_start(sx1303);
-
 	k_sleep(K_FOREVER);
 }
 

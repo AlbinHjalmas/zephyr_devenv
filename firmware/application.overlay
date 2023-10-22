@@ -20,12 +20,4 @@
 
 &spi1 {
     status = "okay";
-
-    loragw_con: loragw_con@0 {
-        compatible = "semtech,sx1303";
-        status = "okay";
-        label = "loragw_con";
-        reg = <0>;
-        spi-max-frequency = <5000000>;
-    };
 };

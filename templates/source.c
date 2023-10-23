@@ -11,7 +11,7 @@
  *     In header file
  *
  * SPDX-License-Identifier: Apache-2.0
- * Copyright (c) 2023 Albin Hjalmas
+ * Copyright (c) 2023 Systemfabriken AB
  * contact: albin@systemfabriken.tech
  *=================================================================================================
  * INCLUDES

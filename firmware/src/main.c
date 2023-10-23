@@ -6,10 +6,9 @@
 #include <zephyr/device.h>
 #include <zephyr/zerv/zerv.h>
 
-LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
+#include "my_zervice.h"
 
-ZERV_COMMAND_REGISTER(my_zervice, echo, ZERV_CMD_PARAMS(const char *message, size_t length),
-		      ZERV_CMD_RETURN(const char *message, size_t length));
+LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
 int main(void)
 {
@@ -20,7 +19,24 @@ int main(void)
 		return -1;
 	}
 
-	LOG_DBG("Hello World!");
+	ZERV_CALL(my_zervice, sum, rc2, p_response2, 1, 2);
+
+	if (rc2 != 0) {
+		LOG_ERR("Failed to call sum command, rc: %d", rc);
+		return -1;
+	}
+
+	LOG_DBG("Sum: %d", p_response2->sum);
+
+	ZERV_CALL(my_zervice, print_hello, rc3, p_response3);
+
+	if (rc3 != 0) {
+		LOG_ERR("Failed to call print_hello command, rc: %d", rc);
+		return -1;
+	}
+
+	LOG_DBG("p_response3: %p", p_response3);
+
 	k_sleep(K_FOREVER);
 
 	return 0;

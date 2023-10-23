@@ -7,7 +7,6 @@
  *              |_____/ \__, |___/\__\___|_| |_| |_|_|  \__,_|_.__/|_|  |_|_|\_\___|_| |_|
  *                       __/ |
  *                      |___/
- * Description:
  *
  * SPDX-License-Identifier: Apache-2.0
  * Copyright (c) 2023 Systemfabriken AB
@@ -21,25 +20,14 @@
  *===============================================================================================*/
 #include <zephyr/zerv/zerv.h>
 
-
 /*=================================================================================================
  * PUBLIC MACROS
  *===============================================================================================*/
-ZERV_DECLARE(my_zervice, \
-    ZERV_COMMAND(echo, \
-        ZERV_COMMAND_PARAMS(const char *message, size_t message_length), \
-        ZERV_COMMAND_RETURN(const char *response, size_t response_length)), \
-    ZERV_COMMAND(add, \
-        ZERV_COMMAND_PARAMS(int a, int b), \
-        ZERV_COMMAND_RETURN(int sum)), \
-    ZERV_COMMAND(print, \
-        ZERV_COMMAND_PARAMS(const char *message, size_t message_length), \
-        ZERV_COMMAND_RETURN(void), \
-    ZERV_COMMAND(get_name, \
-        ZERV_COMMAND_PARAMS(void), \
-        ZERV_COMMAND_RETURN(const char *name, size_t name_length)));
-    
 
+ZERV_CMD_REGISTER(my_zervice, echo, ZERV_CMD_PARAM(const char *message, size_t length),
+		  ZERV_CMD_RETURN(const char *message, size_t length));
+ZERV_CMD_REGISTER(my_zervice, sum, ZERV_CMD_PARAM(int a, int b), ZERV_CMD_RETURN(int sum));
+ZERV_CMD_REGISTER(my_zervice, print_hello, EMPTY, EMPTY);
 
 /*=================================================================================================
  * PUBLIC FUNCTION DECLARATIONS

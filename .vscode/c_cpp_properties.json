@@ -4,7 +4,8 @@
             "name": "firmware Debug",
             "includePath": [
                 "${workspaceFolder}/firmware/src/**",
-                "${workspaceFolder}/zerv/include/**"
+                "${workspaceFolder}/zerv/include/**",
+                "${workspaceFolder}/zerv/**"
             ],
             "defines": [
                 "__ASSERT_ON=1",
@@ -15,16 +16,6 @@
             "cStandard": "${default}",
             "intelliSenseMode": "gcc-arm",
             "compileCommands": "${workspaceFolder}/firmware/build/compile_commands.json"
-        },
-        {
-            "name": "libloragw",
-            "includePath": [
-                "${workspaceFolder}/lora-gateway/sx1302_hal/libloragw/inc/**",
-            ],
-            "compilerPath": "/usr/bin/gcc",
-            "cppStandard": "${default}",
-            "cStandard": "${default}",
-            "intelliSenseMode": "linux-gcc-x64",
         }
     ],
     "version": 4

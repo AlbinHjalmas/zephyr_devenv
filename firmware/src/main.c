@@ -13,26 +13,18 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/device.h>
 
-// PRIVATE DECLARATIONS
-// ###############################################################################################
+#include <zephyr/zerv/zerv.h>
+
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
-// PRIVATE FUNCTION DECLARATIONS
-// ######################################################################################
-
-// PRIVATE DEFINITIONS
-
-// ################################################################################################
-// PROGRAM ENTRY
-// ######################################################################################################
 void main(void)
 {
+	ZERV_CALL(my_zervice, echo, rc, p_response, "Hello World!");
+
 	LOG_DBG("Hello World!");
 	k_sleep(K_FOREVER);
 }
 
-// PRIVATE FUNCTION DEFINITIONS
-// #######################################################################################
 #ifdef CONFIG_ASSERT
 extern void assert_post_action(const char *file, unsigned int line);
 void assert_post_action(const char *file, unsigned int line)

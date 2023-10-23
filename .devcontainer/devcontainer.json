@@ -1,5 +1,5 @@
 {
-	"name": "zephyr_lora_gateway",
+	"name": "zerv",
 	"build": {
 		"dockerfile": "Dockerfile.zephyr",
 		"args": {

@@ -40,7 +40,7 @@ project(zerv)
 
 # endif()
 
-zephyr_library_include_directories(
+include_directories(
   .
   src
 )

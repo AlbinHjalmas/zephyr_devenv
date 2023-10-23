@@ -35,7 +35,8 @@
         "loragw_con.h": "c",
         "time.h": "c",
         "sx130x_reg.h": "c",
-        "sx130x.h": "c"
+        "sx130x.h": "c",
+        "zerv_api_impl.h": "c"
     },
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",

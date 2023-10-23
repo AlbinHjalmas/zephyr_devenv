@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.20.0)
 unset(CONF_FILE CACHE)
 
 list(APPEND CONF_FILE ${CMAKE_CURRENT_SOURCE_DIR}/prj.conf)
+list(APPEND ZEPHYR_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/zerv)
 # list(APPEND DTC_OVERLAY_FILE ${CMAKE_CURRENT_SOURCE_DIR}/application.overlay)
 
 if(DEFINED TEST)
@@ -19,7 +20,7 @@ endif()
 # is called.
 set(CONF_FILE ${CONF_FILE} CACHE INTERNAL "conf_file")
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(sx1303)
+project(zerv)
 
 # if(DEFINED TEST) # If we're building a test, we don't want to build the main application
 
@@ -39,4 +40,7 @@ project(sx1303)
 
 # endif()
 
-zephyr_library_include_directories(.)
+zephyr_library_include_directories(
+  .
+  src
+)

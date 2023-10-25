@@ -3,9 +3,8 @@
         {
             "name": "firmware Debug",
             "includePath": [
-                "${workspaceFolder}/firmware/src/**",
                 "${workspaceFolder}/zerv/include/**",
-                "${workspaceFolder}/zerv/**"
+                "${workspaceFolder}/firmware/src/**"
             ],
             "defines": [
                 "__ASSERT_ON=1",

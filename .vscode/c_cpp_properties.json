@@ -3,18 +3,36 @@
         {
             "name": "firmware Debug",
             "includePath": [
-                "${workspaceFolder}/zerv/include/**",
+                "${workspaceFolder}/zerv/include/",
+                "${workspaceFolder}/zerv/include/subsys",
+                "${workspaceFolder}/zerv/include/subsys/zerv",
                 "${workspaceFolder}/firmware/src/**"
             ],
             "defines": [
                 "__ASSERT_ON=1",
                 "__CDT_PARSER__"
             ],
-            "compilerPath": "/opt/toolchains/zephyr-sdk-0.16.3/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+            "compilerPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
             "cppStandard": "${default}",
             "cStandard": "${default}",
             "intelliSenseMode": "gcc-arm",
             "compileCommands": "${workspaceFolder}/firmware/build/compile_commands.json"
+        },
+        {
+            "name": "Zerv test",
+            "includePath": [
+                "${workspaceFolder}/zerv/include/**",
+                "${workspaceFolder}/zerv/tests/subsys/zerv/**"
+            ],
+            "defines": [
+                "__ASSERT_ON=1",
+                "__CDT_PARSER__"
+            ],
+            "compilerPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+            "cppStandard": "${default}",
+            "cStandard": "${default}",
+            "intelliSenseMode": "gcc-arm",
+            "compileCommands": "${workspaceFolder}/zerv/tests/subsys/zerv/build/compile_commands.json"
         }
     ],
     "version": 4

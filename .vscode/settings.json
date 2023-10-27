@@ -38,7 +38,8 @@
         "sx130x.h": "c",
         "zerv_api_impl.h": "c",
         "kernel.h": "c",
-        "zerv_internal.h": "c"
+        "zerv_internal.h": "c",
+        "zerv.h": "c"
     },
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "file",

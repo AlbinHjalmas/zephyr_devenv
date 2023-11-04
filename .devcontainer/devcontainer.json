@@ -1,5 +1,5 @@
 {
-	"name": "zephyr_lora_gateway",
+	"name": "zephyr",
 	"build": {
 		"dockerfile": "Dockerfile.zephyr",
 		"args": {
@@ -45,5 +45,5 @@
 			}
 		}
 	},
-	"postAttachCommand": "/workdir/project/simulation/start-renode-server" // Start renode telnet server when starting devcontainer"
+	// "postAttachCommand": "/workdir/project/simulation/start-renode-server" // Start renode telnet server when starting devcontainer"
 }

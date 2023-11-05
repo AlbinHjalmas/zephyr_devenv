@@ -2,8 +2,9 @@
 cmake_minimum_required(VERSION 3.20.0)
 unset(CONF_FILE CACHE)
 
+set(BOARD_FLASH_RUNNER jlink)
+
 list(APPEND CONF_FILE ${CMAKE_CURRENT_SOURCE_DIR}/prj.conf)
-list(APPEND ZEPHYR_EXTRA_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/../loragw-con)
 list(APPEND DTC_OVERLAY_FILE ${CMAKE_CURRENT_SOURCE_DIR}/application.overlay)
 
 if(DEFINED TEST)
@@ -20,24 +21,10 @@ endif()
 # is called.
 set(CONF_FILE ${CONF_FILE} CACHE INTERNAL "conf_file")
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-project(sx1303)
+project(nucleo_f767zi)
 
-# if(DEFINED TEST) # If we're building a test, we don't want to build the main application
-
-#   if(${TEST} STREQUAL "network_transport_manager")
-#       add_subdirectory(src/network_transport_manager/test)
-#   else()
-#       message(FATAL_ERROR "Unknown test: ${TEST}")
-#   endif()
-
-# else()
-
-  # add_subdirectory(src/network_transport_manager)
-
-  target_sources(app PRIVATE
-    src/main.c
-  )
-
-# endif()
+target_sources(app PRIVATE
+  src/main.c
+)
 
 zephyr_library_include_directories(.)

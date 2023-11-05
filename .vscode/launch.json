@@ -11,20 +11,28 @@
             "type": "cortex-debug",
             "device": "STM32F767ZI",
             "interface": "swd",
-            "gdbPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
-            "objdumpPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump",
-            "armToolchainPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin",
+            "gdbPath": "/opt/toolchains/zephyr-sdk-0.16.3/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+            "objdumpPath": "/opt/toolchains/zephyr-sdk-0.16.3/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump",
+            "armToolchainPath": "/opt/toolchains/zephyr-sdk-0.16.3/arm-zephyr-eabi/bin",
             "svdFile": "${workspaceFolder}/.vscode/STM32F7x7.svd",
-            "runToEntryPoint": "main"
+            "runToEntryPoint": "main",
+            "postLaunchCommands": [
+                "monitor reset",
+                "monitor go"
+            ],
+            "postRestartSessionCommands": [
+                "monitor reset",
+                "monitor go"
+            ]
         },
         {
             "name": "renode firmware",
             "type": "cortex-debug",
             "request": "launch",
             "servertype": "external",
-            "gdbPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
-            "objdumpPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump",
-            "armToolchainPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin",
+            "gdbPath": "/opt/toolchains/zephyr-sdk-0.16.3/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+            "objdumpPath": "/opt/toolchains/zephyr-sdk-0.16.3/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump",
+            "armToolchainPath": "/opt/toolchains/zephyr-sdk-0.16.3/arm-zephyr-eabi/bin",
             "cwd": "${workspaceFolder}",
             "executable": "${workspaceFolder}/firmware/build/zephyr/zephyr.elf",
             "svdFile": "${workspaceFolder}/.vscode/STM32F7x7.svd",
@@ -32,13 +40,22 @@
             "preLaunchTask": "setup firmware simulation",
             "postDebugTask": "close emulation",
             "postLaunchCommands": [
-                "monitor start"
+                "monitor halt",
+                "monitor reset",
+                "monitor go"
             ],
             "postRestartSessionCommands": [
-                "monitor pause",
-                "monitor cpu Reset",
-                "monitor start"
+                "monitor halt",
+                "monitor reset",
+                "monitor go"
             ]
+        },
+        {
+            "type": "nrf-connect",
+            "request": "launch",
+            "name": "Launch build",
+            "config": "${workspaceFolder}/firmware/build",
+            "runToEntryPoint": "main"
         }
     ]
 }
